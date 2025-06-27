@@ -1,3 +1,5 @@
+// Tile.tsx
+// Represents a single tile in the grid. Handles rendering based on tile state (start, end, wall, path, etc.) and mouse events.
 import { twMerge } from "tailwind-merge";
 import {
   END_TILE_STYLE,
@@ -36,6 +38,7 @@ export function Tile({
   handleMouseUp: MouseFunction;
   handleMouseEnter: MouseFunction;
 }) {
+  // Determine the style for the tile based on its state
   let tileTyleStyle;
 
   if (isStart) {

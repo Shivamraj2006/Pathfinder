@@ -1,7 +1,16 @@
+// dijkstra.ts
+// Implements Dijkstra's pathfinding algorithm for grid-based navigation.
 import { getUntraversedNeighbors } from "../../../utils/getUntraversedNeighbors";
 import { dropFromQueue, isEqual } from "../../../utils/helpers";
 import { GridType, TileType } from "../../../utils/types";
 
+/**
+ * Runs Dijkstra's algorithm on the given grid.
+ * @param grid The grid to search.
+ * @param startTile The starting tile.
+ * @param endTile The ending tile.
+ * @returns An object containing traversed tiles and the path.
+ */
 export const dijkstra = (
   grid: GridType,
   startTile: TileType,
@@ -38,8 +47,9 @@ export const dijkstra = (
     }
   }
 
-  const path = []; // Initialize an array to store the path
-  let current = grid[endTile.row][endTile.col]; // Start from the end tile
+  // Reconstruct the path from end to start
+  const path = [];
+  let current = grid[endTile.row][endTile.col];
   while (current !== null) {
     // Backtrack until the start tile
     current.isPath = true; // Mark the tile as part of the path

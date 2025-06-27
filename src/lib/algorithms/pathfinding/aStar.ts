@@ -1,8 +1,17 @@
+// aStar.ts
+// Implements the A* pathfinding algorithm for grid-based navigation.
 import { getUntraversedNeighbors } from "../../../utils/getUntraversedNeighbors";
 import { dropFromQueue, isEqual } from "../../../utils/helpers";
 import { initFunctionCost, initHeuristicCost } from "../../../utils/heuristics";
 import { GridType, TileType } from "../../../utils/types";
 
+/**
+ * Runs the A* pathfinding algorithm on the given grid.
+ * @param grid The grid to search.
+ * @param startTile The starting tile.
+ * @param endTile The ending tile.
+ * @returns An object containing traversed tiles and the path.
+ */
 export const aStar = (
   grid: GridType,
   startTile: TileType,
@@ -48,23 +57,21 @@ export const aStar = (
           dropFromQueue(neighbors[i], untraversedTiles); // Remove the neighbor from the queue
           neighbors[i].distance = distanceToNeighbor; // Update the neighbor's distance
           functionCost[neighbors[i].row][neighbors[i].col] =
-            neighbors[i].distance +
-            heuristicCost[neighbors[i].row][neighbors[i].col]; // Update the function cost for the neighbor
-          neighbors[i].parent = currentTile; // Set the neighbor's parent to the current tile
-          untraversedTiles.push(neighbors[i]); // Add the neighbor to the queue
+            neighbors[i].distance + heuristicCost[neighbors[i].row][neighbors[i].col]; // Update function cost
+          neighbors[i].parent = currentTile; // Set the parent for path reconstruction
+          untraversedTiles.push(neighbors[i]); // Add neighbor to the queue
         }
       }
     }
   }
 
-  const path = []; // Initialize an array to store the path
-  let current = grid[endTile.row][endTile.col]; // Start from the end tile
+  // Reconstruct the path from end to start
+  const path = [];
+  let current = grid[endTile.row][endTile.col];
   while (current !== null) {
-    // Backtrack until the start tile
-    current.isPath = true; // Mark the tile as part of the path
-    path.unshift(current); // Add the tile to the path
-    current = current.parent!; // Move to the parent tile
+    current.isPath = true;
+    path.unshift(current);
+    current = current.parent!;
   }
-
-  return { traversedTiles, path }; // Return the traversed tiles and the path
+  return { traversedTiles, path };
 };

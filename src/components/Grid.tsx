@@ -1,3 +1,5 @@
+// Grid.tsx
+// Renders the interactive grid for pathfinding visualization. Handles mouse events for wall creation.
 import { twMerge } from "tailwind-merge";
 import { usePathfinding } from "../hooks/usePathfinding";
 import { MAX_COLS, MAX_ROWS } from "../utils/constants";
@@ -10,9 +12,12 @@ export function Grid({
 }: {
   isVisualizationRunningRef: MutableRefObject<boolean>;
 }) {
+  // Access grid state and setter from context
   const { grid, setGrid } = usePathfinding();
+  // Track mouse state for drag-to-create walls
   const [isMouseDown, setIsMouseDown] = useState(false);
 
+  // Handle mouse down event to start wall creation
   const handleMouseDown = (row: number, col: number) => {
     if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col)) {
       return;
@@ -23,6 +28,7 @@ export function Grid({
     setGrid(newGrid);
   };
 
+  // Handle mouse up event to stop wall creation
   const handleMouseUp = (row: number, col: number) => {
     if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col)) {
       return;
@@ -31,6 +37,7 @@ export function Grid({
     setIsMouseDown(false);
   };
 
+  // Handle mouse enter event for drag-to-create walls
   const handleMouseEnter = (row: number, col: number) => {
     if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col)) {
       return;

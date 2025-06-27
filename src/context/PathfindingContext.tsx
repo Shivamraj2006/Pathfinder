@@ -1,3 +1,5 @@
+// PathfindingContext.tsx
+// Provides React context for managing pathfinding algorithm, maze, grid, and visualization state.
 import { ReactNode, createContext, useState } from "react";
 import { AlgorithmType, GridType, MazeType } from "../utils/types";
 import { createGrid } from "../utils/helpers";
@@ -17,10 +19,14 @@ interface PathfindingContextInterface {
   setIsGraphVisualized: (isGraphVisualized: boolean) => void;
 }
 
+// Create the context for pathfinding state
 export const PathfindingContext = createContext<
   PathfindingContextInterface | undefined
 >(undefined);
 
+/**
+ * Provides pathfinding state and setters to child components.
+ */
 export const PathfindingProvider = ({ children }: { children: ReactNode }) => {
   const [algorithm, setAlgorithm] = useState<AlgorithmType>("BFS");
   const [maze, setMaze] = useState<MazeType>("NONE");
