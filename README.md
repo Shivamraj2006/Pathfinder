@@ -64,10 +64,3 @@ yarn build
 - `src/lib/algorithms/` – Pathfinding and maze generation algorithms
 - `src/utils/` – Utility functions and constants
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-Made with ❤️ by TechPrep
